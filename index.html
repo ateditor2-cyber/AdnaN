@@ -153,4 +153,55 @@ async function loadPrice() {
 loadPrice();
 </script> 
     
+<section style="padding:20px">
+<h2>📊 Live Market Dashboard</h2>
+
+<div class="card">
+<h3>NIFTY 50</h3>
+<p id="nifty">Loading...</p>
+</div>
+
+<div class="card">
+<h3>Bitcoin (BTC/USD)</h3>
+<p id="btc">Loading...</p>
+</div>
+
+<div class="card">
+<h3>USD/INR</h3>
+<p id="usd">Loading...</p>
+</div>
+
+<script>
+const apiKey="I7O87M0LKJBI238U";
+
+async function loadIBM(){
+  const res=await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=${apiKey}`);
+  const data=await res.json();
+  if(data["Global Quote"]){
+    document.getElementById("nifty").innerHTML="$"+data["Global Quote"]["05. price"];
+  }
+}
+
+async function loadBTC(){
+  const res=await fetch(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=USD&apikey=${apiKey}`);
+  const data=await res.json();
+  if(data["Realtime Currency Exchange Rate"]){
+    document.getElementById("btc").innerHTML="$"+data["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
+  }
+}
+
+async function loadUSD(){
+  const res=await fetch(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=INR&apikey=${apiKey}`);
+  const data=await res.json();
+  if(data["Realtime Currency Exchange Rate"]){
+    document.getElementById("usd").innerHTML="₹"+data["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
+  }
+}
+
+loadIBM();
+loadBTC();
+loadUSD();
+</script>
+</section> 
+
 </body>
