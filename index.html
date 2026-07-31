@@ -128,4 +128,29 @@ footer{
   </script>
 </div> 
     
+<div class="card">
+  <h3>IBM Stock Price</h3>
+  <p id="price">Loading...</p>
+</div>
+
+<script>
+async function loadPrice() {
+  const apiKey = "I7O87M0LKJBI238U";
+  const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=${apiKey}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    document.getElementById("price").innerHTML =
+      "Price: $" + data["Global Quote"]["05. price"];
+  } catch (e) {
+    document.getElementById("price").innerHTML =
+      "Data could not be loaded.";
+  }
+}
+
+loadPrice();
+</script> 
+    
 </body>
